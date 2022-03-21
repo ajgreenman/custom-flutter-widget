@@ -22,7 +22,7 @@ class CustomMultiChildLayoutTimeline extends StatelessWidget {
                 (index, timelineStageContent) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomMultiChildLayout(
-                    delegate: _TimelineLayoutDelegate(),
+                    delegate: TimelineLayoutDelegate(),
                     children: [
                       LayoutId(
                         id: TimelineLayoutChild.leftTimelineNodeSpiral,
@@ -53,7 +53,7 @@ enum TimelineLayoutChild {
   rightTimelineNodeSpiral,
 }
 
-class _TimelineLayoutDelegate extends MultiChildLayoutDelegate {
+class TimelineLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     // ensure we have all three children
