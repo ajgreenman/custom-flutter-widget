@@ -1,9 +1,9 @@
 import 'package:article/widgets/timeline_node.dart';
-import 'package:article/widgets/timeline_pole.dart';
+import 'package:article/widgets/timeline_spiral.dart';
 import 'package:flutter/material.dart';
 
-class TimelineNodeWithPole extends StatelessWidget {
-  const TimelineNodeWithPole({
+class TimelineNodeSpiral extends StatelessWidget {
+  const TimelineNodeSpiral({
     Key? key,
     required this.index,
   }) : super(key: key);
@@ -15,7 +15,7 @@ class TimelineNodeWithPole extends StatelessWidget {
     return Column(
       children: [
         TimelineNode(index: index),
-        TimelinePole(index: index),
+        TimelineSwirl(index: index),
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TimelinePole extends StatelessWidget {
-  const TimelinePole({Key? key, required this.index}) : super(key: key);
+class TimelineSwirl extends StatelessWidget {
+  const TimelineSwirl({Key? key, required this.index}) : super(key: key);
 
   final int index;
 
@@ -20,10 +20,10 @@ class _CurvePainter extends CustomPainter {
 
   final int index;
 
-  // allows pole to extend through to next stage
-  static const _extraPoleLength = 32.0;
+  // allows spiral to extend through to next stage
+  static const _extraSpiralLength = 32.0;
 
-  static const _poleRadius = 6.0;
+  static const _spiralRadius = 6.0;
 
   static const _spiralStrokeWidth = 4.0;
   static const _borderStrokeWidth = 1.0;
@@ -43,17 +43,17 @@ class _CurvePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     var spiral = Path();
-    spiral.moveTo(_poleRadius, -1.0);
+    spiral.moveTo(_spiralRadius, -1.0);
 
     for (var i = _spiralOffset;
-        i < size.height + _extraPoleLength;
+        i < size.height + _extraSpiralLength;
         i += _spiralStrokeWidth) {
       if ((i - (_spiralStrokeWidth + _spiralOffset)) %
               (_spiralStrokeWidth * 2) ==
           0.0) {
-        spiral.lineTo(-_poleRadius, i);
+        spiral.lineTo(-_spiralRadius, i);
       } else {
-        spiral.moveTo(_poleRadius, i);
+        spiral.moveTo(_spiralRadius, i);
       }
     }
 
@@ -68,18 +68,18 @@ class _CurvePainter extends CustomPainter {
       ..strokeCap = StrokeCap.butt;
 
     var leftLine = Path();
-    leftLine.moveTo(-_poleRadius, -_borderStrokeWidth);
+    leftLine.moveTo(-_spiralRadius, -_borderStrokeWidth);
     leftLine.lineTo(
-      -_poleRadius,
-      size.height + (_extraPoleLength - _spiralStrokeWidth),
+      -_spiralRadius,
+      size.height + (_extraSpiralLength - _spiralStrokeWidth),
     );
     canvas.drawPath(leftLine, paint);
 
     var rightLine = Path();
-    rightLine.moveTo(_poleRadius, -_borderStrokeWidth);
+    rightLine.moveTo(_spiralRadius, -_borderStrokeWidth);
     rightLine.lineTo(
-      _poleRadius,
-      size.height + (_extraPoleLength - _spiralStrokeWidth),
+      _spiralRadius,
+      size.height + (_extraSpiralLength - _spiralStrokeWidth),
     );
     canvas.drawPath(rightLine, paint);
   }

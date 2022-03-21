@@ -1,6 +1,6 @@
 import 'package:article/main.dart';
 import 'package:article/widgets/timeline_node.dart';
-import 'package:article/widgets/timeline_node_with_pole.dart';
+import 'package:article/widgets/timeline_node_spiral.dart';
 import 'package:article/widgets/timeline_stage_content.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +40,9 @@ class TimelineRow extends MultiChildRenderObjectWidget {
   }) : super(
           key: key,
           children: [
-            TimelineNodeWithPole(index: index),
+            TimelineNodeSpiral(index: index),
             timelineStageContent,
-            TimelineNodeWithPole(index: index),
+            TimelineNodeSpiral(index: index),
           ],
         );
 
@@ -71,19 +71,19 @@ class TimelineRowRenderObject extends RenderBox
   @override
   void performLayout() {
     // get our children, and if any are null, don't layout anything
-    var leftTimelineNodeWithPole = firstChild;
-    if (leftTimelineNodeWithPole == null) {
+    var leftTimelineNodeSpiral = firstChild;
+    if (leftTimelineNodeSpiral == null) {
       size = constraints.smallest;
       return;
     }
     // use childAfter to get successive children
-    var timelineStageContent = childAfter(leftTimelineNodeWithPole);
+    var timelineStageContent = childAfter(leftTimelineNodeSpiral);
     if (timelineStageContent == null) {
       size = constraints.smallest;
       return;
     }
-    var rightTimelineNodeWithPole = childAfter(timelineStageContent);
-    if (rightTimelineNodeWithPole == null) {
+    var rightTimelineNodeSpiral = childAfter(timelineStageContent);
+    if (rightTimelineNodeSpiral == null) {
       size = constraints.smallest;
       return;
     }
@@ -99,8 +99,8 @@ class TimelineRowRenderObject extends RenderBox
       parentUsesSize: true,
     );
 
-    // layout each timelineNodeWithPole, constraining  height to that of the content
-    leftTimelineNodeWithPole.layout(
+    // layout each timelineNodeSpiral, constraining  height to that of the content
+    leftTimelineNodeSpiral.layout(
       BoxConstraints.loose(
         Size(
           constraints.maxWidth,
@@ -109,7 +109,7 @@ class TimelineRowRenderObject extends RenderBox
       ),
       parentUsesSize: true,
     );
-    rightTimelineNodeWithPole.layout(
+    rightTimelineNodeSpiral.layout(
       BoxConstraints.loose(
         Size(
           constraints.maxWidth,
@@ -119,22 +119,22 @@ class TimelineRowRenderObject extends RenderBox
       parentUsesSize: true,
     );
 
-    // by default the leftTimelineNodeWithPole is aligned to (0,0)
+    // by default the leftTimelineNodeSpiral is aligned to (0,0)
     // so we don't need to modify its position
 
     // position the stage to the right of the timeline
     var timelineStageContentParentData =
         timelineStageContent.parentData as TimelineRowParentData;
     timelineStageContentParentData.offset = Offset(
-      leftTimelineNodeWithPole.size.width + stagePadding,
+      leftTimelineNodeSpiral.size.width + stagePadding,
       0.0,
     );
 
-    // position the rightTimelineNodeWithPole to the right of the content
-    var rightTimelineNodeWithPoleParentData =
-        rightTimelineNodeWithPole.parentData as TimelineRowParentData;
-    rightTimelineNodeWithPoleParentData.offset = Offset(
-      leftTimelineNodeWithPole.size.width +
+    // position the rightTimelineNodeSpiral to the right of the content
+    var rightTimelineNodeSpiralParentData =
+        rightTimelineNodeSpiral.parentData as TimelineRowParentData;
+    rightTimelineNodeSpiralParentData.offset = Offset(
+      leftTimelineNodeSpiral.size.width +
           stagePadding +
           timelineStageContent.size.width +
           stagePadding,

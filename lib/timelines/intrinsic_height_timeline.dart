@@ -1,5 +1,5 @@
 import 'package:article/main.dart';
-import 'package:article/widgets/timeline_node_with_pole.dart';
+import 'package:article/widgets/timeline_node_spiral.dart';
 import 'package:article/widgets/timeline_stage_content.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +22,11 @@ class IntrinsicHeightTimeline extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      TimelineNodeWithPole(index: index),
+                      TimelineNodeSpiral(index: index),
                       const SizedBox(width: stagePadding),
                       Expanded(child: timelineStageContent),
                       const SizedBox(width: stagePadding),
-                      TimelineNodeWithPole(index: index),
+                      TimelineNodeSpiral(index: index),
                     ],
                   ),
                 ),

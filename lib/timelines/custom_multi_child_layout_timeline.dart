@@ -1,5 +1,5 @@
 import 'package:article/main.dart';
-import 'package:article/widgets/timeline_node_with_pole.dart';
+import 'package:article/widgets/timeline_node_spiral.dart';
 import 'package:article/widgets/timeline_stage_content.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +25,16 @@ class CustomMultiChildLayoutTimeline extends StatelessWidget {
                     delegate: _TimelineLayoutDelegate(),
                     children: [
                       LayoutId(
-                        id: TimelineLayoutChild.leftTimelineNodeWithPole,
-                        child: TimelineNodeWithPole(index: index),
+                        id: TimelineLayoutChild.leftTimelineNodeSpiral,
+                        child: TimelineNodeSpiral(index: index),
                       ),
                       LayoutId(
                         id: TimelineLayoutChild.timelineStageContent,
                         child: timelineStageContent,
                       ),
                       LayoutId(
-                        id: TimelineLayoutChild.rightTimelineNodeWithPole,
-                        child: TimelineNodeWithPole(index: index),
+                        id: TimelineLayoutChild.rightTimelineNodeSpiral,
+                        child: TimelineNodeSpiral(index: index),
                       ),
                     ],
                   ),
@@ -49,17 +49,17 @@ class CustomMultiChildLayoutTimeline extends StatelessWidget {
 
 enum TimelineLayoutChild {
   timelineStageContent,
-  leftTimelineNodeWithPole,
-  rightTimelineNodeWithPole,
+  leftTimelineNodeSpiral,
+  rightTimelineNodeSpiral,
 }
 
 class _TimelineLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     // ensure we have all three children
-    if (!hasChild(TimelineLayoutChild.leftTimelineNodeWithPole) ||
+    if (!hasChild(TimelineLayoutChild.leftTimelineNodeSpiral) ||
         !hasChild(TimelineLayoutChild.timelineStageContent) ||
-        !hasChild(TimelineLayoutChild.rightTimelineNodeWithPole)) {
+        !hasChild(TimelineLayoutChild.rightTimelineNodeSpiral)) {
       return;
     }
 
@@ -69,9 +69,9 @@ class _TimelineLayoutDelegate extends MultiChildLayoutDelegate {
       BoxConstraints.loose(size), // this can be as big as it wants
     );
 
-    // layout the first timelineNodeWithPole with constraints
-    var timelineNodeWithPoleSize = layoutChild(
-      TimelineLayoutChild.leftTimelineNodeWithPole,
+    // layout the first timelineNodeSpiral with constraints
+    var timelineNodeSpiralSize = layoutChild(
+      TimelineLayoutChild.leftTimelineNodeSpiral,
       BoxConstraints(
         // can be as wide as it wants
         maxWidth: size.width,
@@ -82,34 +82,34 @@ class _TimelineLayoutDelegate extends MultiChildLayoutDelegate {
 
     // layout the other
     layoutChild(
-      TimelineLayoutChild.rightTimelineNodeWithPole,
+      TimelineLayoutChild.rightTimelineNodeSpiral,
       BoxConstraints(
         maxWidth: size.width,
         maxHeight: timelineStageContentSize.height,
       ),
     );
 
-    // the left timelineNodeWithPole gets positioned first
+    // the left timelineNodeSpiral gets positioned first
     positionChild(
-      TimelineLayoutChild.leftTimelineNodeWithPole,
+      TimelineLayoutChild.leftTimelineNodeSpiral,
       Offset.zero,
     );
 
     // the content is next, and we can calculate an offset using
-    // the size of the first timelineNodeWithPole
+    // the size of the first timelineNodeSpiral
     positionChild(
       TimelineLayoutChild.timelineStageContent,
       Offset(
-        timelineNodeWithPoleSize.width + stagePadding,
+        timelineNodeSpiralSize.width + stagePadding,
         0.0,
       ),
     );
 
-    // the final timelineNodeWithPole uses both sizes for its offset
+    // the final timelineNodeSpiral uses both sizes for its offset
     positionChild(
-      TimelineLayoutChild.rightTimelineNodeWithPole,
+      TimelineLayoutChild.rightTimelineNodeSpiral,
       Offset(
-        timelineNodeWithPoleSize.width +
+        timelineNodeSpiralSize.width +
             stagePadding +
             timelineStageContentSize.width +
             stagePadding,
